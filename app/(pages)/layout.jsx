@@ -9,6 +9,7 @@ import {
   User,
   Moon,
   Sun,
+  Hamburger,
 } from "lucide-react";
 import Image from "next/image";
 import { useState, useEffect } from "react";
@@ -111,16 +112,19 @@ export default function PagesLayout({ children }) {
             priority
           />
         </div>
-        <div className="flex items-end justify-start w-[10%] h-full p-1 gap-1">
+        <div className="lg:flex hidden items-end justify-start w-[10%] h-full p-1 gap-1">
           Panuinc's Org
         </div>
-        <div className="flex items-center justify-center w-[76%] h-full p-1 gap-1">
+        <div className="flex items-center justify-center w-[75%] lg:w-[76%] h-full p-1 gap-1">
           {" "}
         </div>
-        <div className="flex items-center justify-center w-[3%] aspect-square p-1 gap-1 hover:bg-light-foreground hover:dark:bg-dark-foreground rounded-lg">
+        <div className="lg:hidden flex items-center justify-center w-[5%] lg:w-[3%] aspect-square p-1 gap-1 hover:bg-light-foreground hover:dark:bg-dark-foreground rounded-lg">
+          <Hamburger />
+        </div>
+        <div className="flex items-center justify-center w-[5%] lg:w-[3%] aspect-square p-1 gap-1 hover:bg-light-foreground hover:dark:bg-dark-foreground rounded-lg">
           <BellDot />
         </div>
-        <div className="flex items-center justify-center w-[3%] h-full p-1 gap-1 hover:bg-light-foreground hover:dark:bg-dark-foreground rounded-lg">
+        <div className="flex items-center justify-center w-[5%] lg:w-[3%] h-full p-1 gap-1 hover:bg-light-foreground hover:dark:bg-dark-foreground rounded-lg">
           {mounted && (
             <button
               onClick={() => setTheme(theme === "light" ? "dark" : "light")}
@@ -130,7 +134,7 @@ export default function PagesLayout({ children }) {
             </button>
           )}
         </div>
-        <div className="flex items-center justify-center w-[3%] h-full p-1 gap-1">
+        <div className="flex items-center justify-center w-[5%] lg:w-[3%] h-full p-1 gap-1">
           <Image
             src="/pictureUser/pictureUser_1.png"
             alt="pictureUser"

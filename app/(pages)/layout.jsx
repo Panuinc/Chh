@@ -1,67 +1,55 @@
+import { LayoutDashboard, PanelLeftDashed, Settings } from "lucide-react";
+import Image from "next/image";
+
+function MainMenu({ icons, text }) {
+  return (
+    <>
+      <div className="flex flex-row items-center justify-center w-full p-2 gap-2 border-2 border-dark hover:bg-amber-300">
+        <div className="flex items-center justify-center h-full p-2 gap-2 border-2 border-dark">
+          {icons}
+        </div>
+        <div className="flex items-center justify-start w-full h-full p-2 gap-2 border-2 border-dark">
+          {text}
+        </div>
+      </div>
+    </>
+  );
+}
+
 export default function PagesLayout({ children }) {
   return (
     <>
-      <div className="flex flex-col items-center justify-center w-full h-full gap-2">
-        <div className="flex flex-row items-center justify-center w-full h-fit p-2 gap-2 border-2 border-danger">
-          <div className="flex flex-row items-center justify-center w-full h-full p-2 gap-2 border-2 border-danger">
-            <div className="flex items-center justify-center w-full h-full p-2 gap-2 border-2 border-dark">
-              1
-            </div>
-            <div className="flex items-center justify-center w-full h-full p-2 gap-2 border-2 border-dark">
-              1
-            </div>
+      <div className="flex flex-col items-center justify-center w-full h-full">
+        <div className="flex flex-row items-center justify-center w-full h-fit border-b-1 border-secondary">
+          <div className="flex items-center justify-center w-[5%] h-full p-2 gap-2 border-2 border-dark">
+            <Image
+              src="/logoCompany/logoCompany_1.png"
+              alt="logoCompany"
+              width={12}
+              height={12}
+              priority
+            />
           </div>
-          <div className="flex flex-row items-center justify-center w-full h-full p-2 gap-2 border-2 border-danger">
-            <div className="flex items-center justify-center w-full h-full p-2 gap-2 border-2 border-dark">
-              1
-            </div>
-            <div className="flex items-center justify-center w-full h-full p-2 gap-2 border-2 border-dark">
-              1
-            </div>
+          <div className="flex items-center justify-center w-[10%] h-full p-2 gap-2 border-2 border-dark">
+            1
           </div>
-          <div className="flex flex-row items-center justify-center w-full h-full p-2 gap-2 border-2 border-danger">
-            <div className="flex items-center justify-center w-full h-full p-2 gap-2 border-2 border-dark">
-              1
-            </div>
-            <div className="flex items-center justify-center w-full h-full p-2 gap-2 border-2 border-dark">
-              1
-            </div>
+          <div className="flex items-center justify-center w-[85%] h-full p-2 gap-2 border-2 border-dark">
+            1
           </div>
         </div>
-        <div className="flex flex-row items-center justify-start w-full h-full p-2 gap-2 border-2 border-danger overflow-auto">
-          <div className="flex flex-col items-center justify-start w-[15%] h-full p-2 gap-2 border-2 border-danger overflow-auto">
+        <div className="flex flex-row items-center justify-start w-full h-full border-t-1 border-secondary overflow-auto">
+          <div className="flex flex-col items-center justify-start w-[15%] h-full gap-2 border-r-1 border-secondary overflow-auto">
             <div className="flex flex-col items-center justify-start w-full p-2 gap-2 border-2 border-dark">
-              <div className="flex flex-row items-center justify-center w-full h-full p-2 gap-2 border-2 border-dark hover:bg-amber-300">
-                <div className="flex items-center justify-center h-full p-2 gap-2 border-2 border-dark">
-                  1
-                </div>
-                <div className="flex items-center justify-center w-full h-full p-2 gap-2 border-2 border-dark">
-                  1
-                </div>
-              </div>
+              <MainMenu icons={<LayoutDashboard />} text="Overview" />
             </div>
             <div className="flex flex-col items-center justify-start w-full h-full p-2 gap-2 border-2 border-dark overflow-auto">
-              <div className="flex flex-row items-center justify-center w-full p-2 gap-2 border-2 border-dark">
-                <div className="flex items-center justify-center h-full p-2 gap-2 border-2 border-dark">
-                  2
-                </div>
-                <div className="flex items-center justify-center w-full h-full p-2 gap-2 border-2 border-dark">
-                  2
-                </div>
-              </div>
+              <MainMenu icons={<Settings />} text="Setting" />
             </div>
             <div className="flex flex-col items-center justify-start w-full p-2 gap-2 border-2 border-dark">
-              <div className="flex flex-row items-center justify-center w-full h-full p-2 gap-2 border-2 border-dark">
-                <div className="flex items-center justify-center h-full p-2 gap-2 border-2 border-dark">
-                  3
-                </div>
-                <div className="flex items-center justify-center w-full h-full p-2 gap-2 border-2 border-dark">
-                  3
-                </div>
-              </div>
+              <MainMenu icons={<PanelLeftDashed />} />
             </div>
           </div>
-          <div className="flex flex-col items-center justify-center w-[85%] h-full p-2 gap-2 border-2 border-danger overflow-auto">
+          <div className="flex flex-col items-center justify-center w-[85%] h-full gap-2 border-l-1 border-secondary overflow-auto">
             <div className="flex flex-col items-center justify-start w-full h-full p-2 gap-2 border-2 border-dark overflow-auto">
               <div className="flex items-center justify-center w-full h-20 p-2 gap-2 border-2 border-dark overflow-auto">
                 1

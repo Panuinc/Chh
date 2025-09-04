@@ -1,17 +1,10 @@
-"use client";
-
 import { LayoutDashboard, PanelLeftDashed, Settings } from "lucide-react";
-import { usePathname } from "next/navigation";
 import Image from "next/image";
-import Link from "next/link";
 
-function MainMenu({ href, icons, text, active }) {
+function MainMenu({ icons, text }) {
   return (
-    <Link href={href} className="w-full">
-      <div
-        className={`flex flex-row items-center justify-center w-full p-1 gap-2 rounded-md border-1 border-dark
-        ${active ? "bg-amber-300" : "hover:bg-amber-300"}`}
-      >
+    <>
+      <div className="flex flex-row items-center justify-center w-full p-1 gap-2 rounded-md border-1 border-dark">
         <div className="flex items-center justify-center h-full p-1 gap-2 border-1 border-dark">
           {icons}
         </div>
@@ -19,28 +12,23 @@ function MainMenu({ href, icons, text, active }) {
           {text}
         </div>
       </div>
-    </Link>
+    </>
   );
 }
 
-function SubMenu({ href, text, active }) {
+function SubMenu({ text }) {
   return (
-    <Link href={href} className="w-full">
-      <div
-        className={`flex flex-row items-center justify-center w-full p-1 gap-2 rounded-md border-1 border-dark
-        ${active ? "bg-amber-300" : "hover:bg-amber-300"}`}
-      >
+    <>
+      <div className="flex flex-row items-center justify-center w-full p-1 gap-2 rounded-md border-1 border-dark">
         <div className="flex items-center justify-start w-full h-full p-1 gap-2 border-1 border-dark">
           {text}
         </div>
       </div>
-    </Link>
+    </>
   );
 }
 
 export default function PagesLayout({ children }) {
-  const pathname = usePathname();
-
   return (
     <>
       <div className="flex flex-col items-center justify-center w-full h-full">
@@ -64,44 +52,21 @@ export default function PagesLayout({ children }) {
         <div className="flex flex-row items-center justify-start w-full h-full border-t-1 border-secondary overflow-auto">
           <div className="flex flex-col items-center justify-start w-[15%] h-full gap-2 border-r-1 border-secondary overflow-auto">
             <div className="flex flex-col items-center justify-start w-full p-1 gap-2">
-              <MainMenu
-                href="/overview"
-                icons={<LayoutDashboard />}
-                text="Overview"
-                active={pathname === "/overview"}
-              />
+              <MainMenu icons={<LayoutDashboard />} text="Overview" />
             </div>
             <div className="flex flex-col items-center justify-start w-full h-full p-1 gap-2 overflow-auto">
-              <MainMenu
-                href="/setting"
-                icons={<Settings />}
-                text="Setting"
-                active={pathname === "/setting"}
-              />
+              <MainMenu icons={<Settings />} text="Setting" />
             </div>
             <div className="flex flex-col items-center justify-start w-full p-1 gap-2">
-              <MainMenu
-                href="/menu"
-                icons={<PanelLeftDashed />}
-                text="Menu"
-                active={pathname === "/menu"}
-              />
+              <MainMenu icons={<PanelLeftDashed />} />
             </div>
           </div>
-          <div className="flex flex-col items-center justify-start w-[15%] h-full gap-2 border-l-1 border-secondary overflow-auto">
+          <div className="flex flex-col items-center justify-start w-[15%] h-full gap-2 border-r-1 border-secondary overflow-auto">
             <div className="flex flex-col items-center justify-start w-full p-1 gap-2">
-              <SubMenu
-                href="/overview"
-                text="Sub Overview"
-                active={pathname === "/overview"}
-              />
+              <SubMenu text="Overview" />
             </div>
             <div className="flex flex-col items-center justify-start w-full h-full p-1 gap-2 overflow-auto">
-              <SubMenu
-                href="/setting"
-                text="Sub Setting"
-                active={pathname === "/setting"}
-              />
+              <SubMenu text="Setting" />
             </div>
           </div>
           <div className="flex flex-col items-center justify-center w-[70%] h-full gap-2 border-l-1 border-secondary overflow-auto">

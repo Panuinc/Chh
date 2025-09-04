@@ -10,6 +10,8 @@ import {
   Moon,
   Sun,
   Hamburger,
+  X,
+  Activity,
 } from "lucide-react";
 import Image from "next/image";
 import { useState, useEffect } from "react";
@@ -60,6 +62,7 @@ function SubMenu({ text, href, active }) {
 export default function PagesLayout({ children }) {
   const [collapsed, setCollapsed] = useState(false);
   const [activeMenu, setActiveMenu] = useState(null);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
@@ -118,7 +121,10 @@ export default function PagesLayout({ children }) {
         <div className="flex items-center justify-center w-[75%] lg:w-[76%] h-full p-1 gap-1">
           {" "}
         </div>
-        <div className="lg:hidden flex items-center justify-center w-[5%] lg:w-[3%] aspect-square p-1 gap-1 hover:bg-light-foreground hover:dark:bg-dark-foreground rounded-lg">
+        <div
+          onClick={() => setMobileOpen(true)}
+          className="lg:hidden flex items-center justify-center w-[5%] lg:w-[3%] aspect-square p-1 gap-1 hover:bg-light-foreground hover:dark:bg-dark-foreground rounded-lg"
+        >
           <Hamburger />
         </div>
         <div className="flex items-center justify-center w-[5%] lg:w-[3%] aspect-square p-1 gap-1 hover:bg-light-foreground hover:dark:bg-dark-foreground rounded-lg">
@@ -147,7 +153,7 @@ export default function PagesLayout({ children }) {
 
       <div className="flex flex-row items-center justify-center w-full h-full border-[0.5px] border-light-foreground dark:border-dark-foreground overflow-auto">
         <div
-          className={`flex flex-col items-center justify-start h-full p-1 gap-1 border-[0.5px] border-light-foreground dark:border-dark-foreground ${
+          className={`hidden lg:flex flex-col items-center justify-start h-full p-1 gap-1 border-[0.5px] border-light-foreground dark:border-dark-foreground ${
             collapsed ? "w-fit" : "w-[15%]"
           }`}
         >
@@ -187,7 +193,10 @@ export default function PagesLayout({ children }) {
           </div>
 
           <div className="flex flex-col items-center justify-center w-full p-1 gap-1 border-t-1 border-light-foreground dark:border-dark-foreground">
-            <div className="flex flex-row items-center justify-center w-full p-1 gap-1 hover:bg-light-foreground hover:dark:bg-dark-foreground rounded-lg cursor-pointer">
+            <Link
+              href="/"
+              className="flex flex-row items-center justify-center w-full p-1 gap-1 hover:bg-light-foreground hover:dark:bg-dark-foreground rounded-lg cursor-pointer"
+            >
               <div className="flex items-center justify-center w-fit h-full p-1 gap-1">
                 <LogOut />
               </div>
@@ -196,7 +205,7 @@ export default function PagesLayout({ children }) {
                   Logout
                 </div>
               )}
-            </div>
+            </Link>
           </div>
 
           <div className="flex flex-col items-end justify-center w-full p-1 gap-1">
@@ -213,9 +222,7 @@ export default function PagesLayout({ children }) {
 
         {activeMenu && (
           <div
-            className={`flex flex-col items-center justify-center h-full p-1 gap-1 border-[0.5px] border-light-foreground dark:border-dark-foreground ${
-              collapsed ? "w-[15%]" : "w-[15%]"
-            }`}
+            className={`hidden lg:flex flex-col items-center justify-center h-full p-1 gap-1 border-[0.5px] border-light-foreground dark:border-dark-foreground w-[15%]`}
           >
             <div className="flex flex-col items-center justify-center w-full p-1 gap-1 border-b-1 border-light-foreground dark:border-dark-foreground">
               <div className="flex flex-row items-center justify-center w-full h-full p-1 gap-1">
@@ -238,21 +245,97 @@ export default function PagesLayout({ children }) {
         )}
 
         <div
-          className={`flex flex-col items-center justify-center h-full p-1 gap-1 border-[0.5px] border-light-foreground dark:border-dark-foreground ${
-            activeMenu && !collapsed
-              ? "w-[70%]"
-              : !activeMenu && !collapsed
-              ? "w-[85%]"
-              : !activeMenu && collapsed
-              ? "flex-1"
-              : "w-[85%]"
-          }`}
+          className={`flex flex-col items-center justify-center h-full p-1 gap-1 border-[0.5px] border-light-foreground dark:border-dark-foreground
+    ${
+      activeMenu && !collapsed
+        ? "w-[70%] lg:w-[70%] w-full"
+        : !activeMenu && !collapsed
+        ? "w-[85%] lg:w-[85%] w-full"
+        : !activeMenu && collapsed
+        ? "flex-1 lg:flex-1 w-full"
+        : "w-[85%] lg:w-[85%] w-full"
+    }`}
         >
           <div className="flex flex-col items-center justify-start w-full h-full p-1 gap-1 overflow-auto">
             {children}
           </div>
         </div>
       </div>
+
+      {mobileOpen && (
+        <div className="lg:hidden fixed inset-0 z-50">
+          <div
+            className="absolute inset-0 bg-light-foreground/50 dark:bg-dark-foreground/50"
+            onClick={() => setMobileOpen(false)}
+          />
+          <div className="absolute left-0 top-0 h-full w-[80%] bg-light-background dark:bg-dark-background p-1 gap-1 overflow-auto">
+            <div className="flex flex-row items-center justify-between w-full h-fit p-1 border-b-1 border-light-foreground dark:border-dark-foreground">
+              <span className="flex items-center justify-start w-full h-full p-1 gap-1">
+                <Activity /> Menu
+              </span>
+              <button
+                onClick={() => setMobileOpen(false)}
+                className="flex items-center justify-end w-full h-full p-1 gap-1"
+              >
+                <X />
+              </button>
+            </div>
+            <div className="flex flex-col items-center justify-start w-full h-full p-1 gap-3">
+              <Link
+                href="/overview"
+                className={`flex items-center justify-start w-full h-fit p-1 gap-1 rounded-lg ${
+                  pathname === "/overview"
+                    ? "bg-light-foreground dark:bg-dark-foreground"
+                    : "hover:bg-light-foreground hover:dark:bg-dark-foreground"
+                }`}
+                onClick={() => setMobileOpen(false)}
+              >
+                <LayoutDashboard /> Overview
+              </Link>
+              {menus.map((m, idx) => (
+                <div
+                  key={idx}
+                  className="flex flex-col items-center justify-center w-full h-fit gap-1"
+                >
+                  <Link
+                    href={m.href}
+                    onClick={() => setMobileOpen(false)}
+                    className={`flex flex-row items-center justify-start w-full h-fit p-1 gap-1 rounded-lg ${
+                      pathname.startsWith(m.href)
+                        ? "bg-light-foreground dark:bg-dark-foreground"
+                        : "hover:bg-light-foreground hover:dark:bg-dark-foreground"
+                    }`}
+                  >
+                    {m.icon} {m.text}
+                  </Link>
+                  {pathname.startsWith(m.href) &&
+                    m.subMenus.map((s, i) => (
+                      <Link
+                        key={i}
+                        href={s.href}
+                        onClick={() => setMobileOpen(false)}
+                        className={`flex flex-row items-center justify-start w-full h-fit px-4 py-1 gap-1 rounded-lg ${
+                          pathname === s.href
+                            ? "bg-light-foreground dark:bg-dark-foreground"
+                            : "hover:bg-light-foreground hover:dark:bg-dark-foreground"
+                        }`}
+                      >
+                        {s.text}
+                      </Link>
+                    ))}
+                </div>
+              ))}
+              <Link
+                href="/"
+                onClick={() => setMobileOpen(false)}
+                className="flex flex-row items-center justify-start w-full h-fit p-1 gap-1 rounded-lg cursor-pointer hover:bg-light-foreground hover:dark:bg-dark-foreground"
+              >
+                <LogOut /> Logout
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -3,8 +3,11 @@ import {
   BellDot,
   Computer,
   LayoutDashboard,
+  LogOut,
+  Moon,
   PanelLeftDashed,
   Settings,
+  Sun,
   User,
 } from "lucide-react";
 import Image from "next/image";
@@ -100,11 +103,14 @@ export default function PagesLayout({ children }) {
         <div className="flex items-center justify-start w-[10%] h-full p-1 gap-1 border-1 border-dark">
           Panuinc's Org
         </div>
-        <div className="flex items-center justify-center w-[75%] h-full p-1 gap-1 border-1 border-dark">
+        <div className="flex items-center justify-center w-[70%] h-full p-1 gap-1 border-1 border-dark">
           1
         </div>
         <div className="flex items-center justify-center w-[5%] h-full p-1 gap-1 border-1 border-dark">
           <BellDot />
+        </div>
+        <div className="flex items-center justify-center w-[5%] h-full p-1 gap-1 border-1 border-dark">
+          <Moon /> <Sun />
         </div>
         <div className="flex items-center justify-center w-[5%] h-full p-1 gap-1 border-1 border-dark">
           <Image
@@ -123,7 +129,7 @@ export default function PagesLayout({ children }) {
             collapsed ? "w-fit" : "w-[15%]"
           }`}
         >
-          <div className="flex flex-col items-center justify-center w-full p-1 gap-1 border-b-1 border-dark">
+          <div className="flex flex-col items-center justify-center w-full p-1 gap-1">
             <Link
               href="/"
               className={`flex flex-row items-center justify-center w-full p-1 gap-1 border-1 border-dark rounded cursor-pointer ${
@@ -156,7 +162,20 @@ export default function PagesLayout({ children }) {
             ))}
           </div>
 
-          <div className="flex flex-col items-end justify-center w-full p-1 gap-1 border-t-1 border-dark">
+          <div className="flex flex-col items-center justify-center w-full p-1 gap-1">
+            <div className="flex flex-row items-center justify-center w-full p-1 gap-1 border-1 border-dark hover:bg-danger rounded cursor-pointer">
+              <div className="flex items-center justify-center w-fit h-full p-1 gap-1 border-1 border-dark">
+                <LogOut />
+              </div>
+              {!collapsed && (
+                <div className="flex items-center justify-start w-full h-full p-1 gap-1 border-1 border-dark">
+                  Logout
+                </div>
+              )}
+            </div>
+          </div>
+
+          <div className="flex flex-col items-end justify-center w-full p-1 gap-1">
             <button
               onClick={() => setCollapsed((prev) => !prev)}
               className="flex flex-row items-center justify-center p-1 gap-1 border-1 border-dark hover:bg-danger rounded"

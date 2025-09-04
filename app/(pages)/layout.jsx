@@ -31,9 +31,9 @@ function MainMenu({ icons, text, collapsed, onClick }) {
 function SubMenu({ text }) {
   return (
     <div className="flex flex-row items-center justify-start w-full p-1 gap-1 border-1 border-dark hover:bg-danger rounded cursor-pointer">
-  <div className="flex items-center justify-start w-full h-full p-1 gap-1 border-1 border-dark">
-          {text}
-        </div>
+      <div className="flex items-center justify-start w-full h-full p-1 gap-1 border-1 border-dark">
+        {text}
+      </div>
     </div>
   );
 }
@@ -99,9 +99,9 @@ export default function PagesLayout({ children }) {
 
       <div className="flex flex-row items-center justify-center w-full h-full border-1 border-danger overflow-auto">
         <div
-          className={`flex flex-col items-center justify-start ${
+          className={`flex flex-col items-center justify-start h-full p-1 gap-1 border-1 border-danger ${
             collapsed ? "w-fit" : "w-[15%]"
-          } h-full p-1 gap-1 border-1 border-danger`}
+          }`}
         >
           <div className="flex flex-col items-center justify-center w-full p-1 gap-1 border-b-1 border-dark">
             <div
@@ -145,9 +145,9 @@ export default function PagesLayout({ children }) {
 
         {activeMenu && (
           <div
-            className={`flex flex-col items-center justify-center ${
+            className={`flex flex-col items-center justify-center h-full p-1 gap-1 border-1 border-danger ${
               collapsed ? "w-[15%]" : "w-[15%]"
-            } h-full p-1 gap-1 border-1 border-danger`}
+            }`}
           >
             <div className="flex flex-col items-center justify-center w-full p-1 gap-1 border-b-1 border-dark">
               <div className="flex flex-row items-center justify-center w-full h-full p-1 gap-1 border-1 border-dark">
@@ -165,9 +165,15 @@ export default function PagesLayout({ children }) {
         )}
 
         <div
-          className={`flex flex-col items-center justify-center ${
-            activeMenu ? (collapsed ? "w-[85%]" : "w-[70%]") : "w-[85%]"
-          } h-full p-1 gap-1 border-1 border-danger`}
+          className={`flex flex-col items-center justify-center h-full p-1 gap-1 border-1 border-danger ${
+            activeMenu && !collapsed
+              ? "w-[70%]"
+              : !activeMenu && !collapsed
+              ? "w-[85%]"
+              : !activeMenu && collapsed
+              ? "flex-1"
+              : "w-[85%]"
+          }`}
         >
           <div className="flex flex-col items-center justify-start w-full h-full p-1 gap-1 border-1 border-dark overflow-auto">
             {children}

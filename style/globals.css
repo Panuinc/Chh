@@ -2,10 +2,16 @@
 
 @config "../tailwind.config.js";
 
+body {
+  font-size: smaller;
+  font-weight: 600;
+  color: #7D7D7D;
+}
+
 svg.lucide {
   width: 20px;
   height: 20px;
-  stroke-width: 1;
+  stroke-width: 2;
   transition: stroke-width 0.2s ease;
 }
 

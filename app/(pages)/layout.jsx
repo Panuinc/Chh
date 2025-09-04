@@ -9,12 +9,17 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
-function MainMenu({ icons, text, collapsed, onClick }) {
+function MainMenu({ icons, text, collapsed, href, onClick, active }) {
   return (
-    <div
+    <Link
+      href={href}
       onClick={onClick}
-      className="flex flex-row items-center justify-center w-full p-1 gap-1 border-1 border-dark hover:bg-danger rounded cursor-pointer"
+      className={`flex flex-row items-center justify-center w-full p-1 gap-1 border-1 border-dark rounded cursor-pointer ${
+        active ? "bg-danger" : "hover:bg-danger"
+      }`}
     >
       <div className="flex items-center justify-center w-fit h-full p-1 gap-1 border-1 border-dark">
         {icons}
@@ -24,44 +29,59 @@ function MainMenu({ icons, text, collapsed, onClick }) {
           {text}
         </div>
       )}
-    </div>
+    </Link>
   );
 }
 
-function SubMenu({ text }) {
+function SubMenu({ text, href, active }) {
   return (
-    <div className="flex flex-row items-center justify-start w-full p-1 gap-1 border-1 border-dark hover:bg-danger rounded cursor-pointer">
+    <Link
+      href={href}
+      className={`flex flex-row items-center justify-start w-full p-1 gap-1 border-1 border-dark rounded cursor-pointer ${
+        active ? "bg-danger" : "hover:bg-danger"
+      }`}
+    >
       <div className="flex items-center justify-start w-full h-full p-1 gap-1 border-1 border-dark">
         {text}
       </div>
-    </div>
+    </Link>
   );
 }
 
 export default function PagesLayout({ children }) {
   const [collapsed, setCollapsed] = useState(false);
   const [activeMenu, setActiveMenu] = useState(null);
+  const pathname = usePathname();
 
   const menus = [
     {
       icon: <User />,
       text: "Human Resource",
+      href: "/hr",
       subMenus: [
-        "Human Resource 1",
-        "Human Resource 2",
-        "Human Resource 3",
-        "Human Resource 4",
+        { text: "Human Resource 1", href: "/hr/1" },
+        { text: "Human Resource 2", href: "/hr/2" },
+        { text: "Human Resource 3", href: "/hr/3" },
+        { text: "Human Resource 4", href: "/hr/4" },
       ],
     },
     {
       icon: <Computer />,
       text: "Technology",
-      subMenus: ["Tech 1", "Tech 2"],
+      href: "/tech",
+      subMenus: [
+        { text: "Tech 1", href: "/tech/1" },
+        { text: "Tech 2", href: "/tech/2" },
+      ],
     },
     {
       icon: <Settings />,
       text: "Setting",
-      subMenus: ["Profile", "Security"],
+      href: "/settings",
+      subMenus: [
+        { text: "Profile", href: "/settings/profile" },
+        { text: "Security", href: "/settings/security" },
+      ],
     },
   ];
 
@@ -104,8 +124,11 @@ export default function PagesLayout({ children }) {
           }`}
         >
           <div className="flex flex-col items-center justify-center w-full p-1 gap-1 border-b-1 border-dark">
-            <div
-              className="flex flex-row items-center justify-center w-full p-1 gap-1 border-1 border-dark hover:bg-danger rounded cursor-pointer"
+            <Link
+              href="/"
+              className={`flex flex-row items-center justify-center w-full p-1 gap-1 border-1 border-dark rounded cursor-pointer ${
+                pathname === "/overview" ? "bg-danger" : "hover:bg-danger"
+              }`}
               onClick={() => setActiveMenu(null)}
             >
               <div className="flex items-center justify-center w-fit h-full p-1 gap-1 border-1 border-dark">
@@ -116,7 +139,7 @@ export default function PagesLayout({ children }) {
                   Overview
                 </div>
               )}
-            </div>
+            </Link>
           </div>
 
           <div className="flex flex-col items-center justify-start w-full h-full p-1 gap-1 border-1 border-dark overflow-auto">
@@ -125,8 +148,10 @@ export default function PagesLayout({ children }) {
                 key={idx}
                 icons={menu.icon}
                 text={menu.text}
+                href={menu.href}
                 collapsed={collapsed}
                 onClick={() => setActiveMenu(menu)}
+                active={pathname.startsWith(menu.href)}
               />
             ))}
           </div>
@@ -158,7 +183,12 @@ export default function PagesLayout({ children }) {
             </div>
             <div className="flex flex-col items-center justify-start w-full h-full p-1 gap-1 border-1 border-dark overflow-auto">
               {activeMenu.subMenus.map((s, i) => (
-                <SubMenu key={i} text={s} />
+                <SubMenu
+                  key={i}
+                  text={s.text}
+                  href={s.href}
+                  active={pathname === s.href}
+                />
               ))}
             </div>
           </div>

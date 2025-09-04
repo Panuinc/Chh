@@ -7,11 +7,14 @@ import {
   User,
 } from "lucide-react";
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
-function MainMenu({ icons, text, collapsed }) {
+function MainMenu({ icons, text, collapsed, onClick }) {
   return (
-    <div className="flex flex-row items-center justify-center w-full p-1 gap-1 border-1 border-dark">
+    <div
+      onClick={onClick}
+      className="flex flex-row items-center justify-center w-full p-1 gap-1 border-1 border-dark cursor-pointer"
+    >
       <div className="flex items-center justify-center w-fit h-full p-1 gap-1 border-1 border-dark">
         {icons}
       </div>
@@ -26,25 +29,37 @@ function MainMenu({ icons, text, collapsed }) {
 
 function SubMenu({ text }) {
   return (
-    <div className="flex flex-row items-center justify-center w-full p-1 gap-1 border-1 border-dark">
-      <div className="flex items-center justify-start w-full h-full p-1 gap-1 border-1 border-dark">
-        {text}
-      </div>
+    <div className="flex flex-row items-center justify-start w-full p-1 gap-1 border-1 border-dark cursor-pointer">
+      {text}
     </div>
   );
 }
 
 export default function PagesLayout({ children }) {
   const [collapsed, setCollapsed] = useState(false);
-
-  useEffect(() => {
-    console.log("Sidebar collapsed:", collapsed);
-  }, [collapsed]);
+  const [activeMenu, setActiveMenu] = useState(null);
 
   const menus = [
-    { icon: <User />, text: "Human Resource" },
-    { icon: <Computer />, text: "Technology" },
-    { icon: <Settings />, text: "Setting" },
+    {
+      icon: <User />,
+      text: "Human Resource",
+      subMenus: [
+        "Human Resource 1",
+        "Human Resource 2",
+        "Human Resource 3",
+        "Human Resource 4",
+      ],
+    },
+    {
+      icon: <Computer />,
+      text: "Technology",
+      subMenus: ["Tech 1", "Tech 2"],
+    },
+    {
+      icon: <Settings />,
+      text: "Setting",
+      subMenus: ["Profile", "Security"],
+    },
   ];
 
   return (
@@ -69,21 +84,22 @@ export default function PagesLayout({ children }) {
 
       <div className="flex flex-row items-center justify-center w-full h-full border-1 border-danger overflow-auto">
         <div
-          className={`flex flex-col items-center justify-center ${
+          className={`flex flex-col items-center justify-start ${
             collapsed ? "w-fit" : "w-[15%]"
-          } h-full p-1 gap-1 border-1 border-danger transition-all duration-300 ease-in-out`}
+          } h-full p-1 gap-1 border-1 border-danger`}
         >
-          <div className="flex flex-col items-center justify-center w-full p-1 gap-1 border-1 border-dark">
-            <div className="flex flex-row items-center justify-center w-full p-1 gap-1 border-1 border-dark">
-              <div className="flex items-center justify-center w-fit h-full p-1 gap-1 border-1 border-dark">
-                <LayoutDashboard />
-              </div>
-              {!collapsed && (
-                <div className="flex items-center justify-start w-full h-full p-1 gap-1 border-1 border-dark">
-                  Overview
-                </div>
-              )}
+          <div
+            className="flex flex-row items-center justify-center w-full p-1 gap-1 border-1 border-dark cursor-pointer"
+            onClick={() => setActiveMenu(null)}
+          >
+            <div className="flex items-center justify-center w-fit h-full p-1 gap-1 border-1 border-dark">
+              <LayoutDashboard />
             </div>
+            {!collapsed && (
+              <div className="flex items-center justify-start w-full h-full p-1 gap-1 border-1 border-dark">
+                Overview
+              </div>
+            )}
           </div>
 
           <div className="flex flex-col items-center justify-start w-full h-full p-1 gap-1 border-1 border-dark overflow-auto">
@@ -93,6 +109,7 @@ export default function PagesLayout({ children }) {
                 icons={menu.icon}
                 text={menu.text}
                 collapsed={collapsed}
+                onClick={() => setActiveMenu(menu)}
               />
             ))}
           </div>
@@ -109,30 +126,29 @@ export default function PagesLayout({ children }) {
           </div>
         </div>
 
-        <div
-          className={`flex flex-col items-center justify-center ${
-            collapsed ? "w-[15%]" : "w-[15%]"
-          } h-full p-1 gap-1 border-1 border-danger transition-all duration-300 ease-in-out`}
-        >
-          <div className="flex flex-col items-center justify-center w-full p-1 gap-1 border-1 border-dark">
-            <div className="flex flex-row items-center justify-center w-full p-1 gap-1 border-1 border-dark">
+        {activeMenu && (
+          <div
+            className={`flex flex-col items-center justify-center ${
+              collapsed ? "w-[15%]" : "w-[15%]"
+            } h-full p-1 gap-1 border-1 border-danger`}
+          >
+            <div className="flex flex-col items-center justify-center w-full p-1 gap-1 border-1 border-dark">
               <div className="flex items-center justify-start w-full h-full p-1 gap-1 border-1 border-dark">
-                Human Resource
+                {activeMenu.text}
               </div>
             </div>
+            <div className="flex flex-col items-center justify-start w-full h-full p-1 gap-1 border-1 border-dark overflow-auto">
+              {activeMenu.subMenus.map((s, i) => (
+                <SubMenu key={i} text={s} />
+              ))}
+            </div>
           </div>
-          <div className="flex flex-col items-center justify-start w-full h-full p-1 gap-1 border-1 border-dark overflow-auto">
-            <SubMenu text="Human Resource 1" />
-            <SubMenu text="Human Resource 2" />
-            <SubMenu text="Human Resource 3" />
-            <SubMenu text="Human Resource 4" />
-          </div>
-        </div>
+        )}
 
         <div
           className={`flex flex-col items-center justify-center ${
-            collapsed ? "w-[85%]" : "w-[70%]"
-          } h-full p-1 gap-1 border-1 border-danger transition-all duration-300 ease-in-out`}
+            activeMenu ? (collapsed ? "w-[85%]" : "w-[70%]") : "w-full"
+          } h-full p-1 gap-1 border-1 border-danger`}
         >
           <div className="flex flex-col items-center justify-start w-full h-full p-1 gap-1 border-1 border-dark overflow-auto">
             {children}

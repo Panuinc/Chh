@@ -1,5 +1,6 @@
 "use client";
 import {
+  BellDot,
   Computer,
   LayoutDashboard,
   PanelLeftDashed,
@@ -13,7 +14,7 @@ function MainMenu({ icons, text, collapsed, onClick }) {
   return (
     <div
       onClick={onClick}
-      className="flex flex-row items-center justify-center w-full p-1 gap-1 border-1 border-dark cursor-pointer"
+      className="flex flex-row items-center justify-center w-full p-1 gap-1 border-1 border-dark hover:bg-danger rounded cursor-pointer"
     >
       <div className="flex items-center justify-center w-fit h-full p-1 gap-1 border-1 border-dark">
         {icons}
@@ -29,8 +30,10 @@ function MainMenu({ icons, text, collapsed, onClick }) {
 
 function SubMenu({ text }) {
   return (
-    <div className="flex flex-row items-center justify-start w-full p-1 gap-1 border-1 border-dark cursor-pointer">
-      {text}
+    <div className="flex flex-row items-center justify-start w-full p-1 gap-1 border-1 border-dark hover:bg-danger rounded cursor-pointer">
+  <div className="flex items-center justify-start w-full h-full p-1 gap-1 border-1 border-dark">
+          {text}
+        </div>
     </div>
   );
 }
@@ -77,8 +80,20 @@ export default function PagesLayout({ children }) {
         <div className="flex items-center justify-start w-[10%] h-full p-1 gap-1 border-1 border-dark">
           Panuinc's Org
         </div>
-        <div className="flex items-center justify-center w-[85%] h-full p-1 gap-1 border-1 border-dark">
+        <div className="flex items-center justify-center w-[75%] h-full p-1 gap-1 border-1 border-dark">
           1
+        </div>
+        <div className="flex items-center justify-center w-[5%] h-full p-1 gap-1 border-1 border-dark">
+          <BellDot />
+        </div>
+        <div className="flex items-center justify-center w-[5%] h-full p-1 gap-1 border-1 border-dark">
+          <Image
+            src="/pictureUser/pictureUser_1.png"
+            alt="pictureUser"
+            width={30}
+            height={30}
+            priority
+          />
         </div>
       </div>
 
@@ -88,18 +103,20 @@ export default function PagesLayout({ children }) {
             collapsed ? "w-fit" : "w-[15%]"
           } h-full p-1 gap-1 border-1 border-danger`}
         >
-          <div
-            className="flex flex-row items-center justify-center w-full p-1 gap-1 border-1 border-dark cursor-pointer"
-            onClick={() => setActiveMenu(null)}
-          >
-            <div className="flex items-center justify-center w-fit h-full p-1 gap-1 border-1 border-dark">
-              <LayoutDashboard />
-            </div>
-            {!collapsed && (
-              <div className="flex items-center justify-start w-full h-full p-1 gap-1 border-1 border-dark">
-                Overview
+          <div className="flex flex-col items-center justify-center w-full p-1 gap-1 border-b-1 border-dark">
+            <div
+              className="flex flex-row items-center justify-center w-full p-1 gap-1 border-1 border-dark hover:bg-danger rounded cursor-pointer"
+              onClick={() => setActiveMenu(null)}
+            >
+              <div className="flex items-center justify-center w-fit h-full p-1 gap-1 border-1 border-dark">
+                <LayoutDashboard />
               </div>
-            )}
+              {!collapsed && (
+                <div className="flex items-center justify-start w-full h-full p-1 gap-1 border-1 border-dark">
+                  Overview
+                </div>
+              )}
+            </div>
           </div>
 
           <div className="flex flex-col items-center justify-start w-full h-full p-1 gap-1 border-1 border-dark overflow-auto">
@@ -114,12 +131,12 @@ export default function PagesLayout({ children }) {
             ))}
           </div>
 
-          <div className="flex flex-col items-center justify-center w-full p-1 gap-1 border-1 border-dark">
+          <div className="flex flex-col items-end justify-center w-full p-1 gap-1 border-t-1 border-dark">
             <button
               onClick={() => setCollapsed((prev) => !prev)}
-              className="flex flex-row items-center justify-end w-full p-1 gap-1 border-1 border-dark"
+              className="flex flex-row items-center justify-center p-1 gap-1 border-1 border-dark hover:bg-danger rounded"
             >
-              <div className="flex items-center justify-center w-fit h-full p-1 gap-1 border-1 border-dark">
+              <div className="flex items-center justify-center w-full h-full p-1 gap-1 border-1 border-dark">
                 <PanelLeftDashed />
               </div>
             </button>
@@ -132,9 +149,11 @@ export default function PagesLayout({ children }) {
               collapsed ? "w-[15%]" : "w-[15%]"
             } h-full p-1 gap-1 border-1 border-danger`}
           >
-            <div className="flex flex-col items-center justify-center w-full p-1 gap-1 border-1 border-dark">
-              <div className="flex items-center justify-start w-full h-full p-1 gap-1 border-1 border-dark">
-                {activeMenu.text}
+            <div className="flex flex-col items-center justify-center w-full p-1 gap-1 border-b-1 border-dark">
+              <div className="flex flex-row items-center justify-center w-full h-full p-1 gap-1 border-1 border-dark">
+                <div className="flex items-center justify-start w-full h-full p-1 gap-1 border-1 border-dark">
+                  {activeMenu.text}
+                </div>
               </div>
             </div>
             <div className="flex flex-col items-center justify-start w-full h-full p-1 gap-1 border-1 border-dark overflow-auto">

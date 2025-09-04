@@ -105,8 +105,8 @@ export default function PagesLayout({ children }) {
 
   return (
     <div className="flex flex-col items-center justify-center w-full h-full">
-      <div className="flex flex-row items-center justify-center w-full h-fit border-[0.5px] border-light-foreground dark:border-dark-foreground">
-        <div className="flex items-center justify-center w-[5%] h-full p-1 gap-1">
+      <div className="flex flex-row items-center justify-center w-full lg:h-fit border-[0.5px] border-light-foreground dark:border-dark-foreground">
+        <div className="flex items-center justify-center w-[7%] h-full p-1 gap-1">
           <Image
             src="/logoCompany/logoCompany_1.png"
             alt="logoCompany"
@@ -118,19 +118,13 @@ export default function PagesLayout({ children }) {
         <div className="lg:flex hidden items-end justify-start w-[10%] h-full p-1 gap-1">
           Panuinc's Org
         </div>
-        <div className="flex items-center justify-center w-[75%] lg:w-[76%] h-full p-1 gap-1">
+        <div className="flex items-center justify-center w-[65%] lg:w-[76%] h-full p-1 gap-1">
           {" "}
         </div>
-        <div
-          onClick={() => setMobileOpen(true)}
-          className="lg:hidden flex items-center justify-center w-[5%] lg:w-[3%] aspect-square p-1 gap-1 hover:bg-light-foreground hover:dark:bg-dark-foreground rounded-lg"
-        >
-          <Hamburger />
-        </div>
-        <div className="flex items-center justify-center w-[5%] lg:w-[3%] aspect-square p-1 gap-1 hover:bg-light-foreground hover:dark:bg-dark-foreground rounded-lg">
+        <div className="flex items-center justify-center w-[7%] lg:w-[3%] aspect-square p-1 gap-1 hover:bg-light-foreground hover:dark:bg-dark-foreground rounded-lg">
           <BellDot />
         </div>
-        <div className="flex items-center justify-center w-[5%] lg:w-[3%] h-full p-1 gap-1 hover:bg-light-foreground hover:dark:bg-dark-foreground rounded-lg">
+        <div className="flex items-center justify-center w-[7%] lg:w-[3%] h-full p-1 gap-1 hover:bg-light-foreground hover:dark:bg-dark-foreground rounded-lg">
           {mounted && (
             <button
               onClick={() => setTheme(theme === "light" ? "dark" : "light")}
@@ -140,7 +134,7 @@ export default function PagesLayout({ children }) {
             </button>
           )}
         </div>
-        <div className="flex items-center justify-center w-[5%] lg:w-[3%] h-full p-1 gap-1">
+        <div className="flex items-center justify-center w-[7%] lg:w-[3%] h-full p-1 gap-1">
           <Image
             src="/pictureUser/pictureUser_1.png"
             alt="pictureUser"
@@ -148,6 +142,12 @@ export default function PagesLayout({ children }) {
             height={30}
             priority
           />
+        </div>
+        <div
+          onClick={() => setMobileOpen(true)}
+          className="lg:hidden flex items-center justify-center w-[7%] lg:w-[3%] aspect-square p-1 gap-1 hover:bg-light-foreground hover:dark:bg-dark-foreground rounded-lg"
+        >
+          <Hamburger />
         </div>
       </div>
 

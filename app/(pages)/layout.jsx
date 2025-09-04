@@ -166,7 +166,7 @@ export default function PagesLayout({ children }) {
 
         <div
           className={`flex flex-col items-center justify-center ${
-            activeMenu ? (collapsed ? "w-[85%]" : "w-[70%]") : "w-full"
+            activeMenu ? (collapsed ? "w-[85%]" : "w-[70%]") : "w-[85%]"
           } h-full p-1 gap-1 border-1 border-danger`}
         >
           <div className="flex flex-col items-center justify-start w-full h-full p-1 gap-1 border-1 border-dark overflow-auto">

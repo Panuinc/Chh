@@ -16,18 +16,6 @@ function MainMenu({ icons, text }) {
   );
 }
 
-function SubMenu({ text }) {
-  return (
-    <>
-      <div className="flex flex-row items-center justify-center w-full p-1 gap-2 rounded-md border-1 border-dark">
-        <div className="flex items-center justify-start w-full h-full p-1 gap-2 border-1 border-dark">
-          {text}
-        </div>
-      </div>
-    </>
-  );
-}
-
 export default function PagesLayout({ children }) {
   return (
     <>
@@ -61,15 +49,7 @@ export default function PagesLayout({ children }) {
               <MainMenu icons={<PanelLeftDashed />} />
             </div>
           </div>
-          <div className="flex flex-col items-center justify-start w-[15%] h-full gap-2 border-r-1 border-secondary overflow-auto">
-            <div className="flex flex-col items-center justify-start w-full p-1 gap-2">
-              <SubMenu text="Overview" />
-            </div>
-            <div className="flex flex-col items-center justify-start w-full h-full p-1 gap-2 overflow-auto">
-              <SubMenu text="Setting" />
-            </div>
-          </div>
-          <div className="flex flex-col items-center justify-center w-[70%] h-full gap-2 border-l-1 border-secondary overflow-auto">
+          <div className="flex flex-col items-center justify-center w-[85%] h-full gap-2 border-l-1 border-secondary overflow-auto">
             <div className="flex flex-col items-center justify-start w-full h-full p-1 gap-2 border-1 border-danger overflow-auto">
               {children}
             </div>

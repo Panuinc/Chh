@@ -16,7 +16,7 @@ function MainMenu({ icons, text, collapsed }) {
         {icons}
       </div>
       {!collapsed && (
-        <div className="flex items-center justify-center w-full h-full p-1 gap-2 border-1 border-dark">
+        <div className="flex items-center justify-start w-full h-full p-1 gap-2 border-1 border-dark">
           {text}
         </div>
       )}
@@ -49,7 +49,7 @@ export default function PagesLayout({ children }) {
             priority
           />
         </div>
-        <div className="flex items-center justify-center w-[10%] h-full p-1 gap-2 border-1 border-dark">
+        <div className="flex items-center justify-start w-[10%] h-full p-1 gap-2 border-1 border-dark">
           Panuinc's Org
         </div>
         <div className="flex items-center justify-center w-[85%] h-full p-1 gap-2 border-1 border-dark">
@@ -57,26 +57,26 @@ export default function PagesLayout({ children }) {
         </div>
       </div>
 
-      <div className="flex flex-row items-center justify-center w-full h-full border-t-1 border-secondary">
+      <div className="flex flex-row items-center justify-start w-full h-full border-t-1 border-secondary overflow-auto">
         <div
-          className={`flex flex-col items-center justify-center ${
-            collapsed ? "w-fit" : "w-[15%]"
-          } h-full gap-2 border-r-1 border-secondary transition-all duration-300 ease-in-out`}
+          className={`flex flex-col items-center justify-start ${
+            collapsed ? "w-[5%]" : "w-[15%]"
+          } h-full gap-2 border-r-1 border-secondary overflow-auto transition-all duration-300 ease-in-out`}
         >
-          <div className="flex flex-col items-center justify-center w-full p-1 gap-2">
+          <div className="flex flex-col items-center justify-start w-full p-1 gap-2">
             <div className="flex flex-row items-center justify-center w-full p-1 gap-2 rounded-md border-1 border-dark">
               <div className="flex items-center justify-center h-full p-1 gap-2 border-1 border-dark">
                 <LayoutDashboard />
               </div>
               {!collapsed && (
-                <div className="flex items-center justify-center w-full h-full p-1 gap-2 border-1 border-dark">
+                <div className="flex items-center justify-start w-full h-full p-1 gap-2 border-1 border-dark">
                   Overview
                 </div>
               )}
             </div>
           </div>
 
-          <div className="flex flex-col items-center justify-center w-full h-full p-1 gap-2">
+          <div className="flex flex-col items-center justify-start w-full h-full p-1 gap-2 overflow-auto">
             {menus.map((menu, idx) => (
               <MainMenu
                 key={idx}
@@ -90,7 +90,7 @@ export default function PagesLayout({ children }) {
           <div className="flex flex-col items-center justify-center w-full p-1 gap-2">
             <button
               onClick={() => setCollapsed((prev) => !prev)}
-              className="flex flex-row items-center justify-center w-full p-1 gap-2 rounded-md border-1 border-dark"
+              className="flex flex-row items-center justify-start w-full p-1 gap-2 rounded-md border-1 border-dark"
             >
               <div className="flex items-center justify-center h-full p-1 gap-2 border-1 border-dark">
                 <PanelLeftDashed />
@@ -101,10 +101,10 @@ export default function PagesLayout({ children }) {
 
         <div
           className={`flex flex-col items-center justify-center ${
-            collapsed ? "w-full" : "w-[85%]"
-          } h-full gap-2 border-l-1 border-secondary transition-all duration-300 ease-in-out`}
+            collapsed ? "w-[95%]" : "w-[85%]"
+          } h-full gap-2 border-l-1 border-secondary overflow-auto transition-all duration-300 ease-in-out`}
         >
-          <div className="flex flex-col items-center justify-center w-full h-full p-1 gap-2 border-1 border-danger">
+          <div className="flex flex-col items-center justify-start w-full h-full p-1 gap-2 border-1 border-danger overflow-auto">
             {children}
           </div>
         </div>

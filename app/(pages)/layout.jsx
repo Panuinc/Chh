@@ -24,6 +24,16 @@ function MainMenu({ icons, text, collapsed }) {
   );
 }
 
+function SubMenu({ text }) {
+  return (
+    <div className="flex flex-row items-center justify-center w-full p-1 gap-1 border-1 border-dark">
+      <div className="flex items-center justify-start w-full h-full p-1 gap-1 border-1 border-dark">
+        {text}
+      </div>
+    </div>
+  );
+}
+
 export default function PagesLayout({ children }) {
   const [collapsed, setCollapsed] = useState(false);
 
@@ -101,7 +111,27 @@ export default function PagesLayout({ children }) {
 
         <div
           className={`flex flex-col items-center justify-center ${
-            collapsed ? "w-full" : "w-[85%]"
+            collapsed ? "w-[15%]" : "w-[15%]"
+          } h-full p-1 gap-1 border-1 border-danger transition-all duration-300 ease-in-out`}
+        >
+          <div className="flex flex-col items-center justify-center w-full p-1 gap-1 border-1 border-dark">
+            <div className="flex flex-row items-center justify-center w-full p-1 gap-1 border-1 border-dark">
+              <div className="flex items-center justify-start w-full h-full p-1 gap-1 border-1 border-dark">
+                Human Resource
+              </div>
+            </div>
+          </div>
+          <div className="flex flex-col items-center justify-start w-full h-full p-1 gap-1 border-1 border-dark overflow-auto">
+            <SubMenu text="Human Resource 1" />
+            <SubMenu text="Human Resource 2" />
+            <SubMenu text="Human Resource 3" />
+            <SubMenu text="Human Resource 4" />
+          </div>
+        </div>
+
+        <div
+          className={`flex flex-col items-center justify-center ${
+            collapsed ? "w-[85%]" : "w-[70%]"
           } h-full p-1 gap-1 border-1 border-danger transition-all duration-300 ease-in-out`}
         >
           <div className="flex flex-col items-center justify-start w-full h-full p-1 gap-1 border-1 border-dark overflow-auto">

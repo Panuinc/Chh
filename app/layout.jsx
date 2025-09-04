@@ -34,7 +34,7 @@ export default function RootLayout({ children }) {
             enableSystem={true}
             disableTransitionOnChange
           >
-            <div className="flex items-center justify-center w-full h-screen gap-2">
+            <div className="flex items-center justify-center w-full h-screen gap-2 bg-light-background dark:bg-dark-background">
               {children}
             </div>
           </ThemeProvider>

@@ -4,16 +4,17 @@ import {
   Computer,
   LayoutDashboard,
   LogOut,
-  Moon,
   PanelLeftDashed,
   Settings,
-  Sun,
   User,
+  Moon,
+  Sun,
 } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useTheme } from "next-themes";
 
 function MainMenu({ icons, text, collapsed, href, onClick, active }) {
   return (
@@ -21,7 +22,9 @@ function MainMenu({ icons, text, collapsed, href, onClick, active }) {
       href={href}
       onClick={onClick}
       className={`flex flex-row items-center justify-center w-full p-1 gap-1 border-1 border-dark rounded cursor-pointer ${
-        active ? "bg-danger" : "hover:bg-danger"
+        active
+          ? "bg-light-foreground dark:bg-dark-foreground"
+          : "hover:bg-light-foreground hover:dark:bg-dark-foreground"
       }`}
     >
       <div className="flex items-center justify-center w-fit h-full p-1 gap-1 border-1 border-dark">
@@ -41,7 +44,9 @@ function SubMenu({ text, href, active }) {
     <Link
       href={href}
       className={`flex flex-row items-center justify-start w-full p-1 gap-1 border-1 border-dark rounded cursor-pointer ${
-        active ? "bg-danger" : "hover:bg-danger"
+        active
+          ? "bg-light-foreground dark:bg-dark-foreground"
+          : "hover:bg-light-foreground hover:dark:bg-dark-foreground"
       }`}
     >
       <div className="flex items-center justify-start w-full h-full p-1 gap-1 border-1 border-dark">
@@ -55,17 +60,18 @@ export default function PagesLayout({ children }) {
   const [collapsed, setCollapsed] = useState(false);
   const [activeMenu, setActiveMenu] = useState(null);
   const pathname = usePathname();
+  const { theme, setTheme } = useTheme();
 
   const menus = [
     {
       icon: <User />,
       text: "Human Resource",
-      href: "/hr",
+      href: "/human",
       subMenus: [
-        { text: "Human Resource 1", href: "/hr/1" },
-        { text: "Human Resource 2", href: "/hr/2" },
-        { text: "Human Resource 3", href: "/hr/3" },
-        { text: "Human Resource 4", href: "/hr/4" },
+        { text: "Human Resource 1", href: "/human/1" },
+        { text: "Human Resource 2", href: "/human/2" },
+        { text: "Human Resource 3", href: "/human/3" },
+        { text: "Human Resource 4", href: "/human/4" },
       ],
     },
     {
@@ -110,7 +116,12 @@ export default function PagesLayout({ children }) {
           <BellDot />
         </div>
         <div className="flex items-center justify-center w-[5%] h-full p-1 gap-1 border-1 border-dark">
-          <Moon /> <Sun />
+          <button
+            onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+            className="flex items-center justify-center w-full h-full"
+          >
+            {theme === "light" ? <Moon /> : <Sun />}
+          </button>
         </div>
         <div className="flex items-center justify-center w-[5%] h-full p-1 gap-1 border-1 border-dark">
           <Image
@@ -133,7 +144,9 @@ export default function PagesLayout({ children }) {
             <Link
               href="/"
               className={`flex flex-row items-center justify-center w-full p-1 gap-1 border-1 border-dark rounded cursor-pointer ${
-                pathname === "/overview" ? "bg-danger" : "hover:bg-danger"
+                pathname === "/overview"
+                  ? "bg-light-foreground dark:bg-dark-foreground"
+                  : "hover:bg-light-foreground hover:dark:bg-dark-foreground"
               }`}
               onClick={() => setActiveMenu(null)}
             >
@@ -163,7 +176,7 @@ export default function PagesLayout({ children }) {
           </div>
 
           <div className="flex flex-col items-center justify-center w-full p-1 gap-1">
-            <div className="flex flex-row items-center justify-center w-full p-1 gap-1 border-1 border-dark hover:bg-danger rounded cursor-pointer">
+            <div className="flex flex-row items-center justify-center w-full p-1 gap-1 border-1 border-dark hover:bg-light-foreground hover:dark:bg-dark-foreground rounded cursor-pointer">
               <div className="flex items-center justify-center w-fit h-full p-1 gap-1 border-1 border-dark">
                 <LogOut />
               </div>
@@ -178,7 +191,7 @@ export default function PagesLayout({ children }) {
           <div className="flex flex-col items-end justify-center w-full p-1 gap-1">
             <button
               onClick={() => setCollapsed((prev) => !prev)}
-              className="flex flex-row items-center justify-center p-1 gap-1 border-1 border-dark hover:bg-danger rounded"
+              className="flex flex-row items-center justify-center p-1 gap-1 border-1 border-dark hover:bg-light-foreground hover:dark:bg-dark-foreground rounded"
             >
               <div className="flex items-center justify-center w-full h-full p-1 gap-1 border-1 border-dark">
                 <PanelLeftDashed />
@@ -193,7 +206,7 @@ export default function PagesLayout({ children }) {
               collapsed ? "w-[15%]" : "w-[15%]"
             }`}
           >
-            <div className="flex flex-col items-center justify-center w-full p-1 gap-1 border-b-1 border-dark">
+            <div className="flex flex-col items-center justify-center w-full p-1 gap-1">
               <div className="flex flex-row items-center justify-center w-full h-full p-1 gap-1 border-1 border-dark">
                 <div className="flex items-center justify-start w-full h-full p-1 gap-1 border-1 border-dark">
                   {activeMenu.text}

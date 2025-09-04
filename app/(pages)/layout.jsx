@@ -11,7 +11,7 @@ import {
   Sun,
 } from "lucide-react";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTheme } from "next-themes";
@@ -21,17 +21,17 @@ function MainMenu({ icons, text, collapsed, href, onClick, active }) {
     <Link
       href={href}
       onClick={onClick}
-      className={`flex flex-row items-center justify-center w-full p-1 gap-1 border-1 border-dark rounded cursor-pointer ${
+      className={`flex flex-row items-center justify-center w-full p-1 gap-1 rounded-lg cursor-pointer ${
         active
           ? "bg-light-foreground dark:bg-dark-foreground"
           : "hover:bg-light-foreground hover:dark:bg-dark-foreground"
       }`}
     >
-      <div className="flex items-center justify-center w-fit h-full p-1 gap-1 border-1 border-dark">
+      <div className="flex items-center justify-center w-fit h-full p-1 gap-1">
         {icons}
       </div>
       {!collapsed && (
-        <div className="flex items-center justify-start w-full h-full p-1 gap-1 border-1 border-dark">
+        <div className="flex items-center justify-start w-full h-full p-1 gap-1">
           {text}
         </div>
       )}
@@ -43,13 +43,13 @@ function SubMenu({ text, href, active }) {
   return (
     <Link
       href={href}
-      className={`flex flex-row items-center justify-start w-full p-1 gap-1 border-1 border-dark rounded cursor-pointer ${
+      className={`flex flex-row items-center justify-start w-full p-1 gap-1 rounded-lg cursor-pointer ${
         active
           ? "bg-light-foreground dark:bg-dark-foreground"
           : "hover:bg-light-foreground hover:dark:bg-dark-foreground"
       }`}
     >
-      <div className="flex items-center justify-start w-full h-full p-1 gap-1 border-1 border-dark">
+      <div className="flex items-center justify-start w-full h-full p-1 gap-1">
         {text}
       </div>
     </Link>
@@ -61,6 +61,11 @@ export default function PagesLayout({ children }) {
   const [activeMenu, setActiveMenu] = useState(null);
   const pathname = usePathname();
   const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const menus = [
     {
@@ -96,8 +101,8 @@ export default function PagesLayout({ children }) {
 
   return (
     <div className="flex flex-col items-center justify-center w-full h-full">
-      <div className="flex flex-row items-center justify-center w-full h-fit border-1 border-danger">
-        <div className="flex items-center justify-center w-[5%] h-full p-1 gap-1 border-1 border-dark">
+      <div className="flex flex-row items-center justify-center w-full h-fit border-[0.5px] border-light-foreground dark:border-dark-foreground">
+        <div className="flex items-center justify-center w-[5%] h-full p-1 gap-1">
           <Image
             src="/logoCompany/logoCompany_1.png"
             alt="logoCompany"
@@ -106,24 +111,26 @@ export default function PagesLayout({ children }) {
             priority
           />
         </div>
-        <div className="flex items-center justify-start w-[10%] h-full p-1 gap-1 border-1 border-dark">
+        <div className="flex items-end justify-start w-[10%] h-full p-1 gap-1">
           Panuinc's Org
         </div>
-        <div className="flex items-center justify-center w-[70%] h-full p-1 gap-1 border-1 border-dark">
-          1
+        <div className="flex items-center justify-center w-[76%] h-full p-1 gap-1">
+          {" "}
         </div>
-        <div className="flex items-center justify-center w-[5%] h-full p-1 gap-1 border-1 border-dark">
+        <div className="flex items-center justify-center w-[3%] aspect-square p-1 gap-1 hover:bg-light-foreground hover:dark:bg-dark-foreground rounded-lg">
           <BellDot />
         </div>
-        <div className="flex items-center justify-center w-[5%] h-full p-1 gap-1 border-1 border-dark">
-          <button
-            onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-            className="flex items-center justify-center w-full h-full"
-          >
-            {theme === "light" ? <Moon /> : <Sun />}
-          </button>
+        <div className="flex items-center justify-center w-[3%] h-full p-1 gap-1 hover:bg-light-foreground hover:dark:bg-dark-foreground rounded-lg">
+          {mounted && (
+            <button
+              onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+              className="flex items-center justify-center w-full h-full"
+            >
+              {theme === "light" ? <Moon /> : <Sun />}
+            </button>
+          )}
         </div>
-        <div className="flex items-center justify-center w-[5%] h-full p-1 gap-1 border-1 border-dark">
+        <div className="flex items-center justify-center w-[3%] h-full p-1 gap-1">
           <Image
             src="/pictureUser/pictureUser_1.png"
             alt="pictureUser"
@@ -134,34 +141,34 @@ export default function PagesLayout({ children }) {
         </div>
       </div>
 
-      <div className="flex flex-row items-center justify-center w-full h-full border-1 border-danger overflow-auto">
+      <div className="flex flex-row items-center justify-center w-full h-full border-[0.5px] border-light-foreground dark:border-dark-foreground overflow-auto">
         <div
-          className={`flex flex-col items-center justify-start h-full p-1 gap-1 border-1 border-danger ${
+          className={`flex flex-col items-center justify-start h-full p-1 gap-1 border-[0.5px] border-light-foreground dark:border-dark-foreground ${
             collapsed ? "w-fit" : "w-[15%]"
           }`}
         >
-          <div className="flex flex-col items-center justify-center w-full p-1 gap-1">
+          <div className="flex flex-col items-center justify-center w-full p-1 gap-1 border-b-1 border-light-foreground dark:border-dark-foreground">
             <Link
-              href="/"
-              className={`flex flex-row items-center justify-center w-full p-1 gap-1 border-1 border-dark rounded cursor-pointer ${
+              href="/overview"
+              className={`flex flex-row items-center justify-center w-full p-1 gap-1 rounded-lg cursor-pointer ${
                 pathname === "/overview"
                   ? "bg-light-foreground dark:bg-dark-foreground"
                   : "hover:bg-light-foreground hover:dark:bg-dark-foreground"
               }`}
               onClick={() => setActiveMenu(null)}
             >
-              <div className="flex items-center justify-center w-fit h-full p-1 gap-1 border-1 border-dark">
+              <div className="flex items-center justify-center w-fit h-full p-1 gap-1">
                 <LayoutDashboard />
               </div>
               {!collapsed && (
-                <div className="flex items-center justify-start w-full h-full p-1 gap-1 border-1 border-dark">
+                <div className="flex items-center justify-start w-full h-full p-1 gap-1">
                   Overview
                 </div>
               )}
             </Link>
           </div>
 
-          <div className="flex flex-col items-center justify-start w-full h-full p-1 gap-1 border-1 border-dark overflow-auto">
+          <div className="flex flex-col items-center justify-start w-full h-full p-1 gap-1 overflow-auto">
             {menus.map((menu, idx) => (
               <MainMenu
                 key={idx}
@@ -175,13 +182,13 @@ export default function PagesLayout({ children }) {
             ))}
           </div>
 
-          <div className="flex flex-col items-center justify-center w-full p-1 gap-1">
-            <div className="flex flex-row items-center justify-center w-full p-1 gap-1 border-1 border-dark hover:bg-light-foreground hover:dark:bg-dark-foreground rounded cursor-pointer">
-              <div className="flex items-center justify-center w-fit h-full p-1 gap-1 border-1 border-dark">
+          <div className="flex flex-col items-center justify-center w-full p-1 gap-1 border-t-1 border-light-foreground dark:border-dark-foreground">
+            <div className="flex flex-row items-center justify-center w-full p-1 gap-1 hover:bg-light-foreground hover:dark:bg-dark-foreground rounded-lg cursor-pointer">
+              <div className="flex items-center justify-center w-fit h-full p-1 gap-1">
                 <LogOut />
               </div>
               {!collapsed && (
-                <div className="flex items-center justify-start w-full h-full p-1 gap-1 border-1 border-dark">
+                <div className="flex items-center justify-start w-full h-full p-1 gap-1">
                   Logout
                 </div>
               )}
@@ -191,9 +198,9 @@ export default function PagesLayout({ children }) {
           <div className="flex flex-col items-end justify-center w-full p-1 gap-1">
             <button
               onClick={() => setCollapsed((prev) => !prev)}
-              className="flex flex-row items-center justify-center p-1 gap-1 border-1 border-dark hover:bg-light-foreground hover:dark:bg-dark-foreground rounded"
+              className="flex flex-row items-center justify-center p-1 gap-1 hover:bg-light-foreground hover:dark:bg-dark-foreground rounded-lg"
             >
-              <div className="flex items-center justify-center w-full h-full p-1 gap-1 border-1 border-dark">
+              <div className="flex items-center justify-center w-full h-full p-1 gap-1">
                 <PanelLeftDashed />
               </div>
             </button>
@@ -202,18 +209,18 @@ export default function PagesLayout({ children }) {
 
         {activeMenu && (
           <div
-            className={`flex flex-col items-center justify-center h-full p-1 gap-1 border-1 border-danger ${
+            className={`flex flex-col items-center justify-center h-full p-1 gap-1 border-[0.5px] border-light-foreground dark:border-dark-foreground ${
               collapsed ? "w-[15%]" : "w-[15%]"
             }`}
           >
-            <div className="flex flex-col items-center justify-center w-full p-1 gap-1">
-              <div className="flex flex-row items-center justify-center w-full h-full p-1 gap-1 border-1 border-dark">
-                <div className="flex items-center justify-start w-full h-full p-1 gap-1 border-1 border-dark">
+            <div className="flex flex-col items-center justify-center w-full p-1 gap-1 border-b-1 border-light-foreground dark:border-dark-foreground">
+              <div className="flex flex-row items-center justify-center w-full h-full p-1 gap-1">
+                <div className="flex items-center justify-start w-full h-full p-1 gap-1">
                   {activeMenu.text}
                 </div>
               </div>
             </div>
-            <div className="flex flex-col items-center justify-start w-full h-full p-1 gap-1 border-1 border-dark overflow-auto">
+            <div className="flex flex-col items-center justify-start w-full h-full p-1 gap-1 overflow-auto">
               {activeMenu.subMenus.map((s, i) => (
                 <SubMenu
                   key={i}
@@ -227,7 +234,7 @@ export default function PagesLayout({ children }) {
         )}
 
         <div
-          className={`flex flex-col items-center justify-center h-full p-1 gap-1 border-1 border-danger ${
+          className={`flex flex-col items-center justify-center h-full p-1 gap-1 border-[0.5px] border-light-foreground dark:border-dark-foreground ${
             activeMenu && !collapsed
               ? "w-[70%]"
               : !activeMenu && !collapsed
@@ -237,7 +244,7 @@ export default function PagesLayout({ children }) {
               : "w-[85%]"
           }`}
         >
-          <div className="flex flex-col items-center justify-start w-full h-full p-1 gap-1 border-1 border-dark overflow-auto">
+          <div className="flex flex-col items-center justify-start w-full h-full p-1 gap-1 overflow-auto">
             {children}
           </div>
         </div>

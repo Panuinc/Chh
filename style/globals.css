@@ -1,3 +1,15 @@
 @import "tailwindcss";
 
 @config "../tailwind.config.js";
+
+svg.lucide {
+  width: 20px;
+  height: 20px;
+  stroke-width: 1;
+  transition: stroke-width 0.2s ease;
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}

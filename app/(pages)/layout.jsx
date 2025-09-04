@@ -1,10 +1,17 @@
-import { LayoutDashboard, PanelLeftDashed, Settings } from "lucide-react";
-import Image from "next/image";
+"use client";
 
-function MainMenu({ icons, text }) {
+import { LayoutDashboard, PanelLeftDashed, Settings } from "lucide-react";
+import { usePathname } from "next/navigation";
+import Image from "next/image";
+import Link from "next/link";
+
+function MainMenu({ href, icons, text, active }) {
   return (
-    <>
-      <div className="flex flex-row items-center justify-center w-full p-1 gap-2 rounded-md border-1 border-dark hover:bg-amber-300">
+    <Link href={href} className="w-full">
+      <div
+        className={`flex flex-row items-center justify-center w-full p-1 gap-2 rounded-md border-1 border-dark
+        ${active ? "bg-amber-300" : "hover:bg-amber-300"}`}
+      >
         <div className="flex items-center justify-center h-full p-1 gap-2 border-1 border-dark">
           {icons}
         </div>
@@ -12,11 +19,28 @@ function MainMenu({ icons, text }) {
           {text}
         </div>
       </div>
-    </>
+    </Link>
+  );
+}
+
+function SubMenu({ href, text, active }) {
+  return (
+    <Link href={href} className="w-full">
+      <div
+        className={`flex flex-row items-center justify-center w-full p-1 gap-2 rounded-md border-1 border-dark
+        ${active ? "bg-amber-300" : "hover:bg-amber-300"}`}
+      >
+        <div className="flex items-center justify-start w-full h-full p-1 gap-2 border-1 border-dark">
+          {text}
+        </div>
+      </div>
+    </Link>
   );
 }
 
 export default function PagesLayout({ children }) {
+  const pathname = usePathname();
+
   return (
     <>
       <div className="flex flex-col items-center justify-center w-full h-full">
@@ -40,17 +64,48 @@ export default function PagesLayout({ children }) {
         <div className="flex flex-row items-center justify-start w-full h-full border-t-1 border-secondary overflow-auto">
           <div className="flex flex-col items-center justify-start w-[15%] h-full gap-2 border-r-1 border-secondary overflow-auto">
             <div className="flex flex-col items-center justify-start w-full p-1 gap-2">
-              <MainMenu icons={<LayoutDashboard />} text="Overview" />
+              <MainMenu
+                href="/overview"
+                icons={<LayoutDashboard />}
+                text="Overview"
+                active={pathname === "/overview"}
+              />
             </div>
             <div className="flex flex-col items-center justify-start w-full h-full p-1 gap-2 overflow-auto">
-              <MainMenu icons={<Settings />} text="Setting" />
+              <MainMenu
+                href="/setting"
+                icons={<Settings />}
+                text="Setting"
+                active={pathname === "/setting"}
+              />
             </div>
             <div className="flex flex-col items-center justify-start w-full p-1 gap-2">
-              <MainMenu icons={<PanelLeftDashed />} />
+              <MainMenu
+                href="/menu"
+                icons={<PanelLeftDashed />}
+                text="Menu"
+                active={pathname === "/menu"}
+              />
             </div>
           </div>
-          <div className="flex flex-col items-center justify-center w-[85%] h-full gap-2 border-l-1 border-secondary overflow-auto">
-            <div className="flex flex-col items-center justify-start w-full h-full p-1 gap-2 border-1 border-dark overflow-auto">
+          <div className="flex flex-col items-center justify-start w-[15%] h-full gap-2 border-l-1 border-secondary overflow-auto">
+            <div className="flex flex-col items-center justify-start w-full p-1 gap-2">
+              <SubMenu
+                href="/overview"
+                text="Sub Overview"
+                active={pathname === "/overview"}
+              />
+            </div>
+            <div className="flex flex-col items-center justify-start w-full h-full p-1 gap-2 overflow-auto">
+              <SubMenu
+                href="/setting"
+                text="Sub Setting"
+                active={pathname === "/setting"}
+              />
+            </div>
+          </div>
+          <div className="flex flex-col items-center justify-center w-[70%] h-full gap-2 border-l-1 border-secondary overflow-auto">
+            <div className="flex flex-col items-center justify-start w-full h-full p-1 gap-2 border-1 border-danger overflow-auto">
               {children}
             </div>
           </div>

@@ -122,14 +122,14 @@ export default function PagesLayout({ children }) {
         <div className="flex items-center justify-center w-[65%] lg:w-[76%] h-full p-1 gap-1">
           {" "}
         </div>
-        <div className="flex items-center justify-center w-[7%] lg:w-[3%] aspect-square p-1 gap-1 hover:bg-light-foreground hover:dark:bg-dark-foreground rounded-lg">
+        <div className="flex items-center justify-center w-[7%] lg:w-[3%] aspect-square p-1 gap-1 hover:bg-light-foreground hover:dark:bg-dark-foreground rounded-lg cursor-pointer">
           <BellDot />
         </div>
         <div className="flex items-center justify-center w-[7%] lg:w-[3%] h-full p-1 gap-1 hover:bg-light-foreground hover:dark:bg-dark-foreground rounded-lg">
           {mounted && (
             <button
               onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-              className="flex items-center justify-center w-full h-full"
+              className="flex items-center justify-center w-full h-full cursor-pointer"
             >
               {theme === "light" ? <Moon /> : <Sun />}
             </button>
